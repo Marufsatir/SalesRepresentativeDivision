@@ -25,7 +25,7 @@ router.get("", (req, res) =>
             // maps countries to regions
             for(let countryReg in body)
             {
-                let region = body[countryReg]['region'];
+                let region = body[countryReg]['region'].toUpperCase();
                 let country = body[countryReg]['name'];
                 let added = [];
                 if(regionCount.has(region))

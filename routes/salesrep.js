@@ -25,14 +25,16 @@ router.get("", (req, res) =>
             //count the number of countries in regions
             for(let countryReg in body)
             {
-                if(body[countryReg]['region'] in regionCount)
+                if(body[countryReg]['region'].toUpperCase() in regionCount)
                 {
-                    regionCount[body[countryReg]['region']] = regionCount[body[countryReg]['region']] + 1;
+                    regionCount[body[countryReg]['region'].toUpperCase()] = regionCount[body[countryReg]['region'].toUpperCase()] + 1;
                 }else
                 {
-                    regionCount[body[countryReg]["region"]] = 1;
+                    regionCount[body[countryReg]["region"].toUpperCase()] = 1;
                 }
             }
+
+            console.log(regionCount);
 
             let regionMinMaxRep = [];
 

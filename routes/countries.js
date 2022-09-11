@@ -15,14 +15,16 @@ router.get("", (req, res) =>
 router.get("/:region", async (req, res) =>
 {
     // this is used for if there is a given region in database
-    var countries = country.findOne({region: req.params.region}, {name:1, region:1, '_id':0});
+    // fetch the regions case insensitive since there was two 
+    // region named Apac and APAC and also helpful for request
+    var countries = country.findOne({region: { $regex : new RegExp('^'+ req.params.region + '$', "i")}}, {name:1, region:1, '_id':0});
 
     if((await countries.count()) === 0)
     {
         res.status(409).json("There is no region in database with given name");
     }else
     {
-        country.find({region: req.params.region}, {name:1, region:1, '_id':0}).then((ct) => {res.json(ct)}).catch((err) => {res.json(err)});
+        country.find({region:{ $regex : new RegExp('^'+ req.params.region + '$', "i")}}, {name:1, region:1, '_id':0}).then((ct) => {res.json(ct)}).catch((err) => {res.json(err)});
     }
 });
 
